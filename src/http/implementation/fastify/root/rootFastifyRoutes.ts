@@ -1,18 +1,26 @@
-import { FastifyInstance } from 'fastify';
-import { IHttpRoutes } from '../../../contracts/IHttpRoutes';
-import { RootController } from './rootFastifyController';
+import { FastifyInstance } from "fastify";
+import { IRootRoutes } from "../../../contracts/root/IRootRoutes";
+import { IRootController } from "../../../contracts/root/IRootController";
 
-export class RootFastifyRoutes implements IHttpRoutes<FastifyInstance> {
-  registerRoutes(app: FastifyInstance): void {
-    const controller = new RootController();
-    app.get('/', async (req, res) => {
-      const result = await controller.handle({
+export class RootFastifyRoutes implements IRootRoutes {
+  constructor(
+    private readonly controller: IRootController,
+    private readonly app: FastifyInstance
+  ) {}
+
+  createRootRoute(): void {
+    this.app.get("/", async (req, res) => {
+      const result = await this.controller.handle({
         params: req.params,
         query: req.query,
-        body: undefined,
-        headers: req.headers
+        body: req.body,
+        headers: req.headers,
       });
       res.status(result.statusCode).send(result.body);
     });
+  }
+
+  registerRootRoutes(): void {
+    this.createRootRoute;
   }
 }

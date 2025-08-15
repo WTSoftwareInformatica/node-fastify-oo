@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { IUserController } from '../../../contracts/users/IUserController';
 import { IUserRoutes } from '../../../contracts/users/IUserRoutes';
 
-export class UserFastifyRoutes implements IUserRoutes<FastifyInstance> {
+export class UserFastifyRoutes implements IUserRoutes {
   constructor(private readonly controller: IUserController,
               private readonly app: FastifyInstance) {}
 
@@ -30,7 +30,7 @@ export class UserFastifyRoutes implements IUserRoutes<FastifyInstance> {
     });
   }
 
-  updateUserRoute(): void | Promise<void> {
+  updateUserRoute(): void {
     this.app.put('/users/:id', async (req, res) => {
       const result = await this.controller.update({
         params: req.params,
@@ -43,7 +43,7 @@ export class UserFastifyRoutes implements IUserRoutes<FastifyInstance> {
       
   }
 
-  deleteUserRoute(): void | Promise<void> {
+  deleteUserRoute(): void {
     this.app.delete('/users/:id', async (req, res) => {
       const result = await this.controller.delete({
         params: req.params,
@@ -56,7 +56,7 @@ export class UserFastifyRoutes implements IUserRoutes<FastifyInstance> {
       
   }
 
-  listUsersRoute(): void | Promise<void> {
+  listUsersRoute(): void {
     this.app.get('/users', async (req, res) => {
       const result = await this.controller.list({
         params: req.params,

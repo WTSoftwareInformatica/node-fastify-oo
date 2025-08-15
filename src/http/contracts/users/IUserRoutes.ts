@@ -1,4 +1,4 @@
-export interface IUserRoutes<TApp = any> {
+export interface IUserRoutes {
   createUserRoute(): void;
   getUserByIdRoute(): void;
   updateUserRoute(): void;
