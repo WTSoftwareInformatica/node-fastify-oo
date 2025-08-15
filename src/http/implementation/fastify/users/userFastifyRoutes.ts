@@ -1,12 +1,13 @@
 import { FastifyInstance } from 'fastify';
-import { IHttpRoutes } from '../../../contracts/IHttpRoutes';
 import { IUserController } from '../../../contracts/users/IUserController';
+import { IUserRoutes } from '../../../contracts/users/IUserRoutes';
 
-export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
-  constructor(private readonly controller: IUserController) {}
+export class UserFastifyRoutes implements IUserRoutes<FastifyInstance> {
+  constructor(private readonly controller: IUserController,
+              private readonly app: FastifyInstance) {}
 
-  registerRoutes(app: FastifyInstance): void {
-    app.post('/users', async (req, res) => {
+  createUserRoute(): void {
+    this.app.post('/users', async (req, res) => {
       const result = await this.controller.create({
         params: req.params,
         query: req.query,
@@ -15,8 +16,10 @@ export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
       });
       res.status(result.statusCode).send(result.body);
     });
+  }
 
-    app.get('/users/:id', async (req, res) => {
+  getUserByIdRoute(): void {
+    this.app.get('/users/:id', async (req, res) => {
       const result = await this.controller.getById({
         params: req.params,
         query: req.query,
@@ -25,8 +28,10 @@ export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
       });
       res.status(result.statusCode).send(result.body);
     });
+  }
 
-    app.put('/users/:id', async (req, res) => {
+  updateUserRoute(): void | Promise<void> {
+    this.app.put('/users/:id', async (req, res) => {
       const result = await this.controller.update({
         params: req.params,
         query: req.query,
@@ -35,8 +40,11 @@ export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
       });
       res.status(result.statusCode).send(result.body);
     });
+      
+  }
 
-    app.delete('/users/:id', async (req, res) => {
+  deleteUserRoute(): void | Promise<void> {
+    this.app.delete('/users/:id', async (req, res) => {
       const result = await this.controller.delete({
         params: req.params,
         query: req.query,
@@ -45,8 +53,11 @@ export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
       });
       res.status(result.statusCode).send(result.body);
     });
+      
+  }
 
-    app.get('/users', async (req, res) => {
+  listUsersRoute(): void | Promise<void> {
+    this.app.get('/users', async (req, res) => {
       const result = await this.controller.list({
         params: req.params,
         query: req.query,
@@ -56,4 +67,13 @@ export class UserFastifyRoutes implements IHttpRoutes<FastifyInstance> {
       res.status(result.statusCode).send(result.body);
     });
   }
+      
+  registerUserRoutes(): void {
+    this.createUserRoute();
+    this.getUserByIdRoute();
+    this.updateUserRoute();
+    this.deleteUserRoute();
+    this.listUsersRoute(); 
+  }
+
 }

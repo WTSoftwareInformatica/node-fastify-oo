@@ -9,6 +9,6 @@ export class RoutesFastify implements IHttpRoutes<FastifyInstance> {
     new RootFastifyRoutes().registerRoutes(app);
 
     // Módulo Users
-    new UserFastifyFactory().registerRoutes(app);
+    new UserFastifyFactory().registerUserRoutes(app);
   }
 }
