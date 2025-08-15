@@ -1,0 +1,30 @@
+### Rota Raiz do App
+GET http://localhost:3000/
+
+### Lista todos os Users
+GET http://localhost:3000/users
+
+### Insere um novo User
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Tatiana",
+  "email": "tatiana@example.com"
+}
+
+### Lista um User específico
+GET http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+
+
+### Atualiza um User específico
+PUT http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+Content-Type: application/json
+
+{
+  "name": "Wladimir Santos",
+  "email": "wladimir@example.com"
+}
+
+### Deleta um User específico
+DELETE http://localhost:3000/users/02024e60-e87a-4abc-a51a-d15e718056d0
