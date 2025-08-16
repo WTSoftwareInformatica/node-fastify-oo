@@ -21,6 +21,6 @@ export class RootFastifyRoutes implements IRootRoutes {
   }
 
   registerRootRoutes(): void {
-    this.createRootRoute;
+    this.createRootRoute();
   }
 }

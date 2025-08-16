@@ -13,12 +13,21 @@ Content-Type: application/json
   "email": "tatiana@example.com"
 }
 
+### Insere um novo User
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Wladimir",
+  "email": "wladimir@example.com"
+}
+
 ### Lista um User específico
-GET http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+GET http://localhost:3000/users/b58662a3-e52c-4d2f-85b0-19829763c666
 
 
 ### Atualiza um User específico
-PUT http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+PUT http://localhost:3000/users/b58662a3-e52c-4d2f-85b0-19829763c666
 Content-Type: application/json
 
 {
@@ -27,4 +36,4 @@ Content-Type: application/json
 }
 
 ### Deleta um User específico
-DELETE http://localhost:3000/users/f220bcd1-76e4-4765-b82c-d08914572fe7
+DELETE http://localhost:3000/users/71bf257c-94fc-44cb-9e11-1b858a9abe13

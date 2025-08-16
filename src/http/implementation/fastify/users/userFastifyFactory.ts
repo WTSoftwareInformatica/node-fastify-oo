@@ -11,11 +11,12 @@ import { ListUsersUseCase } from "../../../../packages/v1/modules/user/applicati
 
 import { UserPrismaRepository } from "../../../../packages/v1/modules/user/infra/repositories/userPrismaRepository";
 import { FastifyInstance } from "fastify";
+import { UserInMemoryRepository } from "../../../../packages/v1/modules/user/infra/repositories/userInMemoryRepository";
 
 export class UserFastifyFactory implements IUserFactory {
 
   makeUserRepository() {
-    return new UserPrismaRepository();
+    return new UserInMemoryRepository();
   }
   
   makeUserController() {
