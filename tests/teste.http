@@ -9,7 +9,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "name": "Tatiana",
+  "name": "Tat",
   "email": "tatiana@example.com"
 }
 
@@ -23,11 +23,11 @@ Content-Type: application/json
 }
 
 ### Lista um User específico
-GET http://localhost:3000/users/b58662a3-e52c-4d2f-85b0-19829763c666
+GET http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
 
 
 ### Atualiza um User específico
-PUT http://localhost:3000/users/b58662a3-e52c-4d2f-85b0-19829763c666
+PUT http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
 Content-Type: application/json
 
 {
@@ -36,4 +36,4 @@ Content-Type: application/json
 }
 
 ### Deleta um User específico
-DELETE http://localhost:3000/users/71bf257c-94fc-44cb-9e11-1b858a9abe13
+DELETE http://localhost:3000/users/b52f7474-8e6c-465a-8b53-349d79ac120f
