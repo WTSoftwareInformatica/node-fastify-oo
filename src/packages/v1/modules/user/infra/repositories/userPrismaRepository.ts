@@ -1,34 +1,46 @@
-import { PrismaClient } from '@prisma/client';
-import { IUserRepository } from '../../application/contracts/IUserRepository';
-import { CreateUserDTO } from '../../dto/CreateUserDTO';
-import { UpdateUserDTO } from '../../dto/UpdateUserDTO';
-import { UserMapper } from '../../application/mappers/UserMapper';
+// packages/v1/modules/user/infra/database/UserPrismaRepository.ts
+import { PrismaClient } from "@prisma/client";
+import { IUserRepository } from "../../application/contracts/IUserRepository";
+import { UserEntity } from "../../domain/UserEntity";
+import { UserMapper } from "../../application/mappers/UserMapper";
 
 const prisma = new PrismaClient();
 
 export class UserPrismaRepository implements IUserRepository {
-  
-  async create(data: CreateUserDTO) {
-    const user = await prisma.user.create({ data });
-    return UserMapper.toDomain(user);
+
+  async create(user: UserEntity): Promise<UserEntity> {
+    const created = await prisma.user.create({
+      data: {
+        name: user.name.getValue(),
+        email: user.email.getValue(),
+        createdAt: user.createdAt,
+      },
+    });
+
+    return UserMapper.toDomain(created);
+  }
+  async findById(id: string): Promise<UserEntity | null> {
+    const found = await prisma.user.findUnique({ where: { id } });
+    return found ? UserMapper.toDomain(found) : null;
   }
 
-  async findById(id: string) {
-    const user = await prisma.user.findUnique({ where: { id } });
-    return user ? UserMapper.toDomain(user) : null;
+async update(user: UserEntity): Promise<UserEntity> {
+    const updated = await prisma.user.update({
+      where: { id: user.id.getValue() },
+      data: {
+        name: user.name.getValue(),
+        email: user.email.getValue(),
+      },
+    });
+    return UserMapper.toDomain(updated);
   }
 
-  async update(id: string, data: UpdateUserDTO) {
-    const user = await prisma.user.update({ where: { id }, data });
-    return UserMapper.toDomain(user);
-  }
-
-  async delete(id: string) {
+  async delete(id: string): Promise<void> {
     await prisma.user.delete({ where: { id } });
   }
 
-  async list() {
-    const users = await prisma.user.findMany();
-    return users.map(UserMapper.toDomain);
+  async list(): Promise<UserEntity[]> {
+    const rows = await prisma.user.findMany();
+    return rows.map(UserMapper.toDomain);
   }
 }

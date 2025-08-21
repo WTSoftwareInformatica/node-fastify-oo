@@ -1,6 +1,7 @@
 import { IUserController } from "../../../contracts/users/IUserController";
 import { IHttpRequest } from "../../../contracts/IHttpRequest";
 import { IHttpResponse } from "../../../contracts/IHttpResponse";
+
 import { CreateUserUseCase } from "../../../../packages/v1/modules/user/application/usecases/CreateUserUseCase";
 import { GetUserUseCase } from "../../../../packages/v1/modules/user/application/usecases/GetUserUseCase";
 import { UpdateUserUseCase } from "../../../../packages/v1/modules/user/application/usecases/UpdateUserUseCase";
@@ -21,18 +22,20 @@ export class UserFastifyController implements IUserController {
     try {
       const user = await this.createUser.execute(req.body);
       return { statusCode: 201, body: UserMapper.toDTO(user) };
-    } catch (error) {
-      return { statusCode: 400, body: error };
+    } catch (error: any) {
+      return { statusCode: 400, body: { error: error.message } };
     }
   }
 
   async getById(req: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const userPromisse = await this.getUser.execute(req.params.id);
-      const user = userPromisse ? UserMapper.toDTO(userPromisse) : null;
-      return { statusCode: 200, body: user };
-    } catch (error) {
-      return { statusCode: 400, body: error };
+      const user = await this.getUser.execute(req.params.id);
+      return {
+        statusCode: user ? 200 : 404,
+        body: user ? UserMapper.toDTO(user) : { error: "User not found" },
+      };
+    } catch (error: any) {
+      return { statusCode: 400, body: { error: error.message } };
     }
   }
 
@@ -40,22 +43,26 @@ export class UserFastifyController implements IUserController {
     try {
       const user = await this.updateUser.execute(req.params.id, req.body);
       return { statusCode: 200, body: UserMapper.toDTO(user) };
-    } catch (error) {
-      return { statusCode: 400, body: error };
+    } catch (error: any) {
+      return { statusCode: 400, body: { error: error.message } };
     }
   }
 
   async delete(req: IHttpRequest): Promise<IHttpResponse> {
     try {
       await this.deleteUser.execute(req.params.id);
-      return { statusCode: 204, body: { message: 'User deleted successfully' } };
-    } catch (error) {
-      return { statusCode: 400, body: error };
+      return { statusCode: 204, body: null };
+    } catch (error: any) {
+      return { statusCode: 400, body: { error: error.message } };
     }
   }
 
   async list(_: IHttpRequest): Promise<IHttpResponse> {
-    const users = await this.listUsers.execute();
-    return { statusCode: 200, body: users.map(UserMapper.toDTO) };
+    try {
+      const users = await this.listUsers.execute();
+      return { statusCode: 200, body: users.map(UserMapper.toDTO) };
+    } catch (error: any) {
+      return { statusCode: 400, body: { error: error.message } };
+    }
   }
 }

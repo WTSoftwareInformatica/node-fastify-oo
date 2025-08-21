@@ -1,19 +1,36 @@
+// packages/v1/modules/user/application/mappers/UserMapper.ts
 import { UserEntity } from "../../domain/UserEntity";
 import { UniqueId } from "../../../../shared/value-objects/uniqueIdValueObject";
 import { Nome } from "../../../../shared/value-objects/nomeValueObject";
 import { Email } from "../../../../shared/value-objects/emailValueObject";
 
+type RawPersistenceUser = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+};
+
+type UserDTO = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+};
+
 export class UserMapper {
-  static toDomain(raw: any): UserEntity {
-    return new UserEntity(
-      new UniqueId(raw.id),
-      new Nome(raw.name),
-      new Email(raw.email),
-      raw.createdAt
-    );
+  // ORM → Domain
+  static toDomain(raw: RawPersistenceUser): UserEntity {
+    return new UserEntity({
+      id: new UniqueId(raw.id),
+      name: new Nome(raw.name),
+      email: new Email(raw.email),
+      createdAt: raw.createdAt,
+    });
   }
 
-  static toPersistence(entity: UserEntity): any {
+  // Domain → ORM
+  static toPersistence(entity: UserEntity): RawPersistenceUser {
     return {
       id: entity.id.getValue(),
       name: entity.name.getValue(),
@@ -22,7 +39,8 @@ export class UserMapper {
     };
   }
 
-  static toDTO(entity: UserEntity): any {
+  // Domain → DTO (resposta da API)
+  static toDTO(entity: UserEntity): UserDTO {
     return {
       id: entity.id.getValue(),
       name: entity.name.getValue(),

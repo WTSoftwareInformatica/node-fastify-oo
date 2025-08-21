@@ -2,21 +2,41 @@ import { UniqueId } from "../../../shared/value-objects/uniqueIdValueObject";
 import { Nome } from "../../../shared/value-objects/nomeValueObject";
 import { Email } from "../../../shared/value-objects/emailValueObject";
 
-export class UserEntity {
-  constructor(
-    public readonly id: UniqueId,
-    public name: Nome,
-    public email: Email,
-    public readonly createdAt: Date
-  ) {}
-
-}
-
-/*
-export interface UserEntity {
-  id: string;
-  name: string;
-  email: string;
+export type UserProps = {
+  id: UniqueId;
+  name: Nome;
+  email: Email;
   createdAt: Date;
+};
+
+export class UserEntity {
+  private readonly props: UserProps;
+
+  constructor(props: UserProps) {
+    this.props = props;
+  }
+
+  // Getters
+  get id(): UniqueId {
+    return this.props.id;
+  }
+  get name(): Nome {
+    return this.props.name;
+  }
+  get email(): Email {
+    return this.props.email;
+  }
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  // Factory para criação
+  static createNew(input: { name: Nome; email: Email }): UserEntity {
+    return new UserEntity({
+      id: new UniqueId(), // gera internamente
+      name: input.name,
+      email: input.email,
+      createdAt: new Date(),
+    });
+  }
 }
-  */
