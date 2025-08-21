@@ -1,4 +1,3 @@
-// packages/v1/modules/user/application/mappers/UserMapper.ts
 import { UserEntity } from "../../domain/UserEntity";
 import { UniqueId } from "../../../../shared/value-objects/uniqueIdValueObject";
 import { Nome } from "../../../../shared/value-objects/nomeValueObject";
@@ -8,6 +7,7 @@ type RawPersistenceUser = {
   id: string;
   name: string;
   email: string;
+  hashedPassword: string;
   createdAt: Date;
 };
 
@@ -25,6 +25,7 @@ export class UserMapper {
       id: new UniqueId(raw.id),
       name: new Nome(raw.name),
       email: new Email(raw.email),
+      password: raw.hashedPassword,
       createdAt: raw.createdAt,
     });
   }
@@ -35,6 +36,7 @@ export class UserMapper {
       id: entity.id.getValue(),
       name: entity.name.getValue(),
       email: entity.email.getValue(),
+      hashedPassword: entity.password,
       createdAt: entity.createdAt,
     };
   }

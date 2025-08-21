@@ -16,7 +16,7 @@ import { UserInMemoryRepository } from "../../../../packages/v1/modules/user/inf
 export class UserFastifyFactory implements IUserFactory {
 
   makeUserRepository() {
-    return new UserPrismaRepository();
+    return new UserInMemoryRepository();
   }
   
   makeUserController() {

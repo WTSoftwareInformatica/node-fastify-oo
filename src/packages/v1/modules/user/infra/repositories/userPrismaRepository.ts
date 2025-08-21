@@ -13,13 +13,16 @@ export class UserPrismaRepository implements IUserRepository {
       data: {
         name: user.name.getValue(),
         email: user.email.getValue(),
+        hashedPassword: user.password,
         createdAt: user.createdAt,
       },
     });
 
     return UserMapper.toDomain(created);
   }
-  async findById(id: string): Promise<UserEntity | null> {
+
+
+async findById(id: string): Promise<UserEntity | null> {
     const found = await prisma.user.findUnique({ where: { id } });
     return found ? UserMapper.toDomain(found) : null;
   }
@@ -30,6 +33,7 @@ async update(user: UserEntity): Promise<UserEntity> {
       data: {
         name: user.name.getValue(),
         email: user.email.getValue(),
+        hashedPassword: user.password,
       },
     });
     return UserMapper.toDomain(updated);

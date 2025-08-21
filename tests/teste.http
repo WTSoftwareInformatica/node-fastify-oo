@@ -10,7 +10,8 @@ Content-Type: application/json
 
 {
   "name": "Tat",
-  "email": "tatiana@example.com"
+  "email": "tatiana@example.com",
+  "password": "123456"
 }
 
 ### Insere um novo User
@@ -19,15 +20,16 @@ Content-Type: application/json
 
 {
   "name": "Wladimir",
-  "email": "wladimir@example.com"
+  "email": "wladimir@example.com",
+  "password": "123456"
 }
 
 ### Lista um User específico
-GET http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+GET http://localhost:3000/users/f54b47d8-8b9d-48f6-a427-fe7e983f44aa
 
 
 ### Atualiza um User específico
-PUT http://localhost:3000/users/689fd7fc-5abd-49da-bfba-317beb94d0d4
+PUT http://localhost:3000/users/f54b47d8-8b9d-48f6-a427-fe7e983f44aa
 Content-Type: application/json
 
 {
@@ -36,4 +38,4 @@ Content-Type: application/json
 }
 
 ### Deleta um User específico
-DELETE http://localhost:3000/users/b52f7474-8e6c-465a-8b53-349d79ac120f
+DELETE http://localhost:3000/users/e2ee01ee-6ccc-4976-b587-2b839a825c19
