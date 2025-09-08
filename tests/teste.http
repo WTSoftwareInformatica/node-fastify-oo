@@ -3,6 +3,8 @@ GET http://localhost:3000/
 
 ### Lista todos os Users
 GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxM2RiNmJiZi1jOWJkLTQ3NTgtODM4Yy1hYWJhZjU1YmE4YmMiLCJlbWFpbCI6IndsYWRpbWlyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MzMxNDI3LCJleHAiOjE3NTYzMzg2MjcsImF1ZCI6ImZsb3dnZXN0LWFwcCIsImlzcyI6ImZsb3dnZXN0IiwianRpIjoiNzQwNzFjNjgtNzFhOS00YjU2LWJhMjctYmI1YzMwM2QyZTQ3In0.5f9unalzZnx4E2gAwFtgkxi9FQ_tsN0UMJN7JBXx6tQ
+Content-Type: application/json
 
 ### Insere um novo User
 POST http://localhost:3000/users
@@ -25,11 +27,11 @@ Content-Type: application/json
 }
 
 ### Lista um User específico
-GET http://localhost:3000/users/f54b47d8-8b9d-48f6-a427-fe7e983f44aa
+GET http://localhost:3000/users/13db6bbf-c9bd-4758-838c-aabaf55ba8bc
 
 
 ### Atualiza um User específico
-PUT http://localhost:3000/users/f54b47d8-8b9d-48f6-a427-fe7e983f44aa
+PUT http://localhost:3000/users/13db6bbf-c9bd-4758-838c-aabaf55ba8bc
 Content-Type: application/json
 
 {
@@ -38,4 +40,30 @@ Content-Type: application/json
 }
 
 ### Deleta um User específico
-DELETE http://localhost:3000/users/e2ee01ee-6ccc-4976-b587-2b839a825c19
+DELETE http://localhost:3000/users/0483785f-f456-4e88-bc79-06d9829f2be0
+
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "wladimir@example.com",
+  "password": "123456"
+}
+
+### Refresh token
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxM2RiNmJiZi1jOWJkLTQ3NTgtODM4Yy1hYWJhZjU1YmE4YmMiLCJlbWFpbCI6IndsYWRpbWlyQGV4YW1wbGUuY29tIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3NTYzMjgyMzQsImV4cCI6MTc1NjkzMzAzNCwiYXVkIjoiZmxvd2dlc3QtYXBwIiwiaXNzIjoiZmxvd2dlc3QifQ.wUDcKXkxrgddePKqTI4SVrfzH9VpyZ3VGeC3Xjwbn70"
+}
+
+### Logout
+POST http://localhost:3000/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxM2RiNmJiZi1jOWJkLTQ3NTgtODM4Yy1hYWJhZjU1YmE4YmMiLCJlbWFpbCI6IndsYWRpbWlyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzU2MzMxNDI3LCJleHAiOjE3NTYzMzg2MjcsImF1ZCI6ImZsb3dnZXN0LWFwcCIsImlzcyI6ImZsb3dnZXN0IiwianRpIjoiNzQwNzFjNjgtNzFhOS00YjU2LWJhMjctYmI1YzMwM2QyZTQ3In0.5f9unalzZnx4E2gAwFtgkxi9FQ_tsN0UMJN7JBXx6tQ
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxM2RiNmJiZi1jOWJkLTQ3NTgtODM4Yy1hYWJhZjU1YmE4YmMiLCJlbWFpbCI6IndsYWRpbWlyQGV4YW1wbGUuY29tIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3NTYzMjgyOTgsImV4cCI6MTc1NjkzMzA5OCwiYXVkIjoiZmxvd2dlc3QtYXBwIiwiaXNzIjoiZmxvd2dlc3QifQ.7IuhNX0a1L63KEERL8OUTvid2cLEpoUVKX0sAFkLbKo"
+}

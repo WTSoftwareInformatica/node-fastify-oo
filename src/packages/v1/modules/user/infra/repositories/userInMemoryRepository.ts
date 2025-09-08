@@ -13,6 +13,10 @@ export class UserInMemoryRepository implements IUserRepository {
     return this.users.find((u) => u.id.getValue() === id) || null;
   }
 
+  async findByEmail(email: string): Promise<UserEntity | null> {
+    return this.users.find((u) => u.email.getValue() === email) || null;
+  }
+
   async update(user: UserEntity): Promise<UserEntity> {
     const index = this.users.findIndex((u) => u.id.getValue() === user.id.getValue());
     this.users[index] = user;

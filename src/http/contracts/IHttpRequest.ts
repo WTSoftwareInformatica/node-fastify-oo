@@ -4,4 +4,5 @@ export interface IHttpRequest {
   body?: any;
   headers?: any;
   acesso?: any;
+  auth?: any;
 }

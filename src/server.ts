@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { mainFastify } from './http/implementation/fastify/mainFastify';
 
 async function bootstrap() {

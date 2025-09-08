@@ -27,6 +27,11 @@ async findById(id: string): Promise<UserEntity | null> {
     return found ? UserMapper.toDomain(found) : null;
   }
 
+async findByEmail(email: string): Promise<UserEntity | null> {
+    const found = await prisma.user.findUnique({ where: { email } });
+    return found ? UserMapper.toDomain(found) : null;
+  }
+
 async update(user: UserEntity): Promise<UserEntity> {
     const updated = await prisma.user.update({
       where: { id: user.id.getValue() },

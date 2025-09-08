@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { IUserController } from '../../../contracts/users/IUserController';
 import { IUserRoutes } from '../../../contracts/users/IUserRoutes';
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 export class UserFastifyRoutes implements IUserRoutes {
   constructor(private readonly controller: IUserController,
@@ -57,8 +58,11 @@ export class UserFastifyRoutes implements IUserRoutes {
   }
 
   listUsersRoute(): void {
-    this.app.get('/users', async (req, res) => {
-      const result = await this.controller.list({
+    this.app.get('/users',
+      { preHandler: [authMiddleware] },
+      async (req, res) => {
+            
+    const result = await this.controller.list({
         params: req.params,
         query: req.query,
         body: undefined,
